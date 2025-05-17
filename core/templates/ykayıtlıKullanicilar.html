@@ -1,0 +1,259 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Ana Sayfa -KOÜ Bilgi Sistemi</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <link href="{% static 'vendor/simple-datatables/style.min.css' %}" rel="stylesheet" />
+        <link href="{% static 'css/yazlab_yönetici/styles.css' %}" rel="stylesheet" />
+        <style>
+          .sidebar-logo {
+              text-align: center;
+              padding: 20px 0;
+              background-color: #212529;
+              border-bottom: 1px solid #444;
+          }
+  
+          .sidebar-logo img {
+              width: 80px;
+              height: auto;
+              max-width: 100%;
+          }
+      </style>
+  </head>
+  <body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+      <a class="navbar-brand ps-3" href="{% url 'yhome' %}">KOÜ Yönetici Paneli</a>
+      <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"><i class="fas fa-user fa-fw"></i></a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Ayarlar</a></li>
+            <li><a class="dropdown-item" href="#">Activity Log</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#">Çıkış</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <div id="layoutSidenav">
+      <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+          <div class="sidebar-logo">
+            <img src="{% static 'images/logo.png' %}" alt="Logo">
+        </div>
+          <div class="sb-sidenav-menu">
+            <div class="nav">
+              <div class="sb-sidenav-menu-heading">Menü</div>
+              <a class="nav-link" href="{% url 'yhome' %}">
+                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div> Ana Sayfa
+              </a>
+              <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBasvurular">
+                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                Başvurular
+                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+              </a>
+              <div class="collapse" id="collapseBasvurular" data-bs-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav">
+                  <a class="nav-link" href="ytablesYeniB.html">Yeni Başvurular</a>
+                  <a class="nav-link" href="ytablesDevamB.html">Devam Eden Başvurular</a>
+                  <a class="nav-link" href="ytablesBitenB.html">Biten Başvurular</a>
+                  <a class="nav-link" href="ytablesSonuclananB.html">Sonuçlanan Başvurular</a>
+                </nav>
+              </div>
+              <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages">
+                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                Sistem Ayarları
+                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+              </a>
+              <div class="collapse" id="collapsePages">
+                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                  <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth">
+                    Jüri Ayarları
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                  </a>
+                  <div class="collapse" id="pagesCollapseAuth">
+                    <nav class="sb-sidenav-menu-nested nav">
+                      <a class="nav-link" href="yyeniKullanici.html">Jüri Kayıt Oluşturma</a>
+                      <a class="nav-link" href="{% url 'ykayitli_kullanicilar' %}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Kayıtlı Kullanıcılar
+                      </a>
+                    </nav>
+                  </div>
+                </nav>
+              </div>
+              <a class="nav-link" href="{% url 'ytables' %}">
+                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                Bildirimler ve Mailler
+              </a>
+            </div>
+          </div>
+          <div class="sb-sidenav-footer">
+            <div class="small">Giriş Yapıldı:</div> Admin A
+          </div>
+        </nav>
+      </div>
+
+      <div id="layoutSidenav_content">
+        <main class="container-fluid px-4">
+          <h1 class="mt-4">Kayıtlı Kullanıcılar</h1>
+          <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'yhome' %}">Ana Sayfa</a></li>
+            <li class="breadcrumb-item active">Kayıtlı Kullanıcılar</li>
+          </ol>
+
+          <form method="post" id="juryForm">
+            {% csrf_token %}
+
+            <div class="card mb-4">
+              <div class="card-header"><i class="fas fa-users me-1"></i> Jüri Atama</div>
+              <div class="card-body">
+                <p>İş ilanındaki başvuruları değerlendirecek jüri üyelerini ekleyin (tam olarak 5 kullanıcı eklenmeli).</p>
+                <table class="table" id="juryAssignmentTable">
+                  <thead>
+                    <tr>
+                      <th>TC Kimlik No</th>
+                      <th>İsim</th>
+                      <th>Soy İsim</th>
+                      <th>Ünvan</th>
+                      <th>İlan</th>
+                      <th>İşlemler</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+                <button type="submit" class="btn btn-primary">Jürileri Ata</button>
+              </div>
+            </div>
+
+            <div class="card mb-4">
+              <div class="card-header"><i class="fas fa-table me-1"></i> Kayıtlı Kullanıcılar</div>
+              <div class="card-body">
+                <table class="table table-striped" id="datatablesSimple">
+                  <thead>
+                    <tr>
+                      <th>Seç</th>
+                      <th>TC Kimlik No</th>
+                      <th>İsim</th>
+                      <th>Soy İsim</th>
+                      <th>Ünvan</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for j in juri_adaylari %}
+                    <tr data-juri-id="{{ j.juriID }}">
+                        <td><input type="checkbox" class="user-checkbox"></td>
+                        <td>{{ j.tc }}</td>
+                        <td>{{ j.isim }}</td>
+                        <td>{{ j.soyisim }}</td>
+                        <td>{{ j.unvan }}</td>
+                      </tr>
+                    {% empty %}
+                      <tr><td colspan="5" class="text-center">Henüz jüri adayı yok.</td></tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <button type="button" class="btn btn-secondary mt-3" id="addSelectedUsersBtn">Seçili Kullanıcıları Ekle</button>
+              </div>
+            </div>
+          </form>
+        </main>
+
+        <footer class="py-4 bg-light mt-auto">
+          <div class="container-fluid px-4">
+            <div class="d-flex align-items-center justify-content-between small">
+              <div class="text-muted">Bu web sitesinin hakları Necibe Güner'e aittir.</div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'vendor/simple-datatables/simple-datatables.min.js' %}"></script>
+    <script src="{% static 'js/yazlab_yönetici/scripts.js' %}"></script>
+    <script src="{% static 'js/datatables-simple-demo.js' %}"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const addBtn = document.getElementById("addSelectedUsersBtn");
+        const juryTableBody = document.querySelector("#juryAssignmentTable tbody");
+    
+        // İlan seçeneklerini HTML string olarak tanımla
+        const ilanOptions = `{% for ilan in ilanlar %}<option value="{{ ilan.ilanid }}">{{ ilan.bolum }} – {{ ilan.pozisyon }}</option>{% endfor %}`;
+    
+        function addJuryRow(userData) {
+          const row = juryTableBody.insertRow();
+          row.insertCell().textContent = userData.tc;
+          row.insertCell().textContent = userData.firstName;
+          row.insertCell().textContent = userData.lastName;
+          row.insertCell().textContent = userData.title;
+    
+          const ilanCell = row.insertCell();
+          const sel = document.createElement('select');
+          sel.className = 'form-select';
+          sel.innerHTML = '<option value="">İlan Seç</option>' + ilanOptions;
+          ilanCell.appendChild(sel);
+    
+          const hiddenCell = row.insertCell();
+    
+          const juriInput = document.createElement('input');
+          juriInput.type = 'hidden';
+          juriInput.name = 'juri_ids';
+          juriInput.value = userData.id;
+          hiddenCell.appendChild(juriInput);
+    
+          const ilanInput = document.createElement('input');
+          ilanInput.type = 'hidden';
+          ilanInput.name = 'ilan_ids';
+          ilanInput.value = '';
+          hiddenCell.appendChild(ilanInput);
+    
+          sel.addEventListener('change', () => {
+            ilanInput.value = sel.value;
+          });
+    
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "btn btn-danger btn-sm mt-1";
+          btn.textContent = "Sil";
+          btn.addEventListener("click", () => row.remove());
+          hiddenCell.appendChild(document.createElement("br"));
+          hiddenCell.appendChild(btn);
+        }
+    
+        addBtn.addEventListener("click", () => {
+          document.querySelectorAll(".user-checkbox:checked").forEach(cb => {
+            const tr = cb.closest("tr");
+            const cells = tr.getElementsByTagName("td");
+            const userData = {
+              id: parseInt(tr.dataset.juriId),
+              tc: cells[1].textContent.trim(),
+              firstName: cells[2].textContent.trim(),
+              lastName: cells[3].textContent.trim(),
+              title: cells[4].textContent.trim()
+            };
+            if (juryTableBody.rows.length < 5) {
+              addJuryRow(userData);
+            }
+            cb.checked = false;
+          });
+        });
+      });
+    </script>
+    
+    {% if request.GET.success %}
+      <script>alert("🎉 Jüri atama işlemi başarıyla tamamlandı!");</script>
+    {% endif %}
+  </body>
+</html>

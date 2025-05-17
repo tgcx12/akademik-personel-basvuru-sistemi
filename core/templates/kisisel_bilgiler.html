@@ -1,0 +1,300 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Kişisel Bilgiler</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+        }
+
+        .menu-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            z-index: 1001;
+            width: 30px;
+            height: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .menu-toggle .bar {
+            height: 4px;
+            width: 100%;
+            background-color: black;
+            border-radius: 2px;
+        }
+
+        .side-menu {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #28a745;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            z-index: 1000;
+        }
+
+        .side-menu.show {
+            width: 250px;
+        }
+
+        .side-menu a {
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.2s;
+        }
+
+        .side-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            color: white;
+        }
+
+        .header {
+            background-color: #28a745;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .header .logo {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 24px;
+        }
+
+        .main-container {
+            min-height: 100vh;
+            padding-bottom: 60px; /* Footer için boşluk bırak */
+        }
+
+        .info-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px auto;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #f8f8f8;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .info-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .info-box {
+            width: 100%;
+        }
+
+        .info-item {
+            margin-bottom: 12px;
+            font-size: 18px;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 6px;
+        }
+
+        .info-item span {
+            font-weight: bold;
+            color: #000;
+            margin-right: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        textarea, input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin-top: 5px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            position: relative;
+        }
+
+        .btn-primary {
+            background-color: #28a745 !important; /* yeşil */
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hamburger Menü -->
+<div class="menu-toggle" onclick="toggleMenu()">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+</div>
+
+<div class="side-menu" id="sideMenu">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleMenu()">×</a>
+    <a href="{% url 'kisisel_bilgiler' %}">👤 Kişisel Bilgiler</a>
+    <a href="{% url 'ilanlar' %}">📋 İlanlar</a>
+</div>
+
+<script>
+    function toggleMenu() {
+        document.getElementById('sideMenu').classList.toggle('show');
+    }
+</script>
+
+<!-- Ana İçerik -->
+<div class="main-container">
+    <!-- Header -->
+    <header class="header">
+        <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo" />
+        <h1>Kocaeli Üniversitesi Akademik Personel Başvuru Sistemi</h1>
+    </header>
+
+    <section class="info-section">
+        <h2>Kişisel Bilgiler</h2>
+
+        {% if profil %}
+        <div class="info-box">
+            <div class="info-item"><span>Ad Soyad:</span> {{ profil.ad_soyad }}</div>
+            <div class="info-item"><span>TC Kimlik No:</span> {{ profil.tc_kimlik_no }}</div>
+            <div class="info-item"><span>Doğum Tarihi:</span> {{ profil.dogum_tarihi }}</div>
+            <div class="info-item"><span>Akademik Ünvan:</span> {{ profil.akademik_unvan }}</div>
+            <div class="info-item"><span>E-posta:</span> {{ profil.email }}</div>
+            <div class="info-item"><span>Adres:</span> {{ profil.adres }}</div>
+        </div>
+        {% else %}
+        <p>Henüz kişisel bilgileriniz kaydedilmemiş.</p>
+        {% endif %}
+
+        <button onclick="openEditModal()" class="btn btn-primary">Düzenle</button>
+    </section>
+</div>
+
+<!-- Modal -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <span onclick="closeEditModal()" class="modal-close">&times;</span>
+        <h3>Bilgileri Düzenle</h3>
+        <form method="POST" action="{% url 'kisisel_bilgiler_guncelle' %}">
+            {% csrf_token %}
+            <label for="email">Yeni E-posta:</label>
+            <input type="email" id="email" name="email" value="{{ profil.email }}" required><br><br>
+
+            <label for="adres">Yeni Adres:</label>
+            <textarea id="adres" name="adres" required>{{ profil.adres }}</textarea><br><br>
+
+            <div style="display: flex; justify-content: space-between;">
+                <button type="submit" class="btn btn-success">Kaydet</button>
+                <button type="button" class="btn" onclick="closeEditModal()">İptal</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openEditModal() {
+        document.getElementById("editModal").style.display = "block";
+    }
+
+    function closeEditModal() {
+        document.getElementById("editModal").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById("editModal");
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2024 Kocaeli Üniversitesi. Tüm Hakları Saklıdır.</p>
+</footer>
+
+</body>
+</html>
